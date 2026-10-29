@@ -1,0 +1,16 @@
+{
+  "name": "斗研电竞俱乐部 · 积分系统",
+  "short_name": "斗研积分",
+  "description": "斗研电竞俱乐部 积分榜与积分教学",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b0d12",
+  "theme_color": "#ff5c35",
+  "icons": [
+    { "src": "images/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "images/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "images/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

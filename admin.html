@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>斗研积分 · 管理端</title>
+  <meta name="theme-color" content="#ff5c35">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="site-header">
+    <div class="logo">斗研</div>
+    <div>
+      <h1>斗研电竞俱乐部 · 管理端</h1>
+      <p class="subtitle">积分登记 · 成员 · 老师 · 兑换</p>
+    </div>
+  </header>
+
+  <!-- 登录 -->
+  <div id="login-view" class="card login-wrap">
+    <h2>管理员登录</h2>
+    <form id="login-form">
+      <div class="field">
+        <label class="lbl" for="login-user">用户名</label>
+        <input id="login-user" class="input" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label class="lbl" for="login-pass">密码</label>
+        <input id="login-pass" class="input" type="password" autocomplete="current-password" required>
+      </div>
+      <p id="login-err" class="err" hidden></p>
+      <button class="btn btn-primary" type="submit" style="width:100%">登录</button>
+    </form>
+  </div>
+
+  <!-- 管理主界面 -->
+  <div id="main-view" hidden>
+    <div class="admin-head">
+      <span class="admin-user" id="admin-user"></span>
+      <button class="btn btn-small" id="btn-logout">退出登录</button>
+    </div>
+
+    <nav class="tabs" id="admin-tabs">
+      <button class="tab-btn active" data-tab="entry">积分登记</button>
+      <button class="tab-btn" data-tab="members">成员</button>
+      <button class="tab-btn" data-tab="teachers">老师</button>
+      <button class="tab-btn" data-tab="redeem">兑换</button>
+      <button class="tab-btn" data-tab="data">数据</button>
+    </nav>
+
+    <!-- 积分登记 -->
+    <section id="tab-entry" class="tab-panel active">
+      <div class="card">
+        <h2>积分登记</h2>
+
+        <div class="grid-2">
+          <div class="field">
+            <label class="lbl" for="event-select">赛事</label>
+            <select id="event-select" class="select"></select>
+          </div>
+          <div class="field">
+            <label class="lbl">新建赛事</label>
+            <div class="btn-row">
+              <input id="event-name" class="input" placeholder="如 10月第4周周赛" style="flex:1">
+              <select id="event-type" class="select" style="width:88px">
+                <option>周赛</option><option>月赛</option><option>其他</option>
+              </select>
+              <input id="event-date" class="input" type="date" style="width:140px">
+              <button class="btn btn-small" id="btn-create-event">新建</button>
+            </div>
+          </div>
+        </div>
+
+        <h3>快速录入</h3>
+        <div class="entry-row">
+          <div class="field">
+            <label class="lbl" for="entry-name">成员</label>
+            <input id="entry-name" class="input" list="member-list" placeholder="输入姓名（新名字会自动创建成员）">
+            <datalist id="member-list"></datalist>
+          </div>
+          <div class="field">
+            <label class="lbl" for="entry-points">积分</label>
+            <input id="entry-points" class="input" type="number" inputmode="numeric" placeholder="如 30">
+          </div>
+          <div class="field">
+            <label class="lbl" for="entry-reason">备注（选填）</label>
+            <input id="entry-reason" class="input" placeholder="如 冠军 / 参赛 / 兑换">
+          </div>
+          <button class="btn btn-primary" id="btn-add-entry">添加</button>
+        </div>
+        <p class="hint">提示：在“积分”输入框里按回车即可快速添加下一条。</p>
+
+        <h3>批量导入</h3>
+        <div class="field">
+          <textarea id="bulk-text" class="textarea" placeholder="每行一条：名字 积分 [备注]&#10;例如：&#10;张三 50 冠军&#10;李四 30&#10;王五 20 参赛"></textarea>
+        </div>
+        <button class="btn" id="btn-bulk-import">批量导入</button>
+
+        <h3>最近登记</h3>
+        <div id="entry-list" class="entry-list"></div>
+      </div>
+    </section>
+
+    <!-- 成员 -->
+    <section id="tab-members" class="tab-panel">
+      <div class="card">
+        <h2>成员管理</h2>
+        <div class="grid-2">
+          <div class="field">
+            <label class="lbl" for="m-name">姓名 / 昵称</label>
+            <input id="m-name" class="input" placeholder="必填">
+          </div>
+          <div class="field">
+            <label class="lbl" for="m-nick">备注名（选填）</label>
+            <input id="m-nick" class="input">
+          </div>
+          <div class="field">
+            <label class="lbl" for="m-avatar">头像图片链接（选填）</label>
+            <input id="m-avatar" class="input" placeholder="https://...">
+          </div>
+          <div class="field">
+            <label class="lbl">&nbsp;</label>
+            <button class="btn btn-primary" id="btn-add-member">添加成员</button>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>成员</th><th>总积分</th><th class="actions">操作</th></tr></thead>
+          <tbody id="member-rows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 老师 -->
+    <section id="tab-teachers" class="tab-panel">
+      <div class="card">
+        <h2>老师管理</h2>
+        <div class="grid-2">
+          <div class="field">
+            <label class="lbl" for="t-name">老师名字</label>
+            <input id="t-name" class="input" placeholder="必填">
+          </div>
+          <div class="field">
+            <label class="lbl" for="t-avatar">头像链接（选填）</label>
+            <input id="t-avatar" class="input" placeholder="https://...">
+          </div>
+          <div class="field">
+            <label class="lbl" for="t-mode">操作模式</label>
+            <select id="t-mode" class="select">
+              <option>经典</option><option>现代</option><option>经典 / 现代</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="lbl" for="t-points">积分价格（每小时）</label>
+            <input id="t-points" class="input" type="number" inputmode="numeric" placeholder="如 200">
+          </div>
+        </div>
+        <div class="field">
+          <label class="lbl" for="t-chars">角色水平（每行一个：角色 分数）</label>
+          <textarea id="t-chars" class="textarea" placeholder="例如：&#10;卢克 M2300&#10;亚思敏 M2000&#10;隆 M1800"></textarea>
+        </div>
+        <div class="field">
+          <label class="lbl" for="t-teach">教学角色（用逗号或顿号分隔）</label>
+          <input id="t-teach" class="input" placeholder="如：卢克，亚思敏">
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label class="lbl" for="t-pro">签约战队（选填，填了显示职业选手标）</label>
+            <input id="t-pro" class="input" placeholder="如 HJK / TEC">
+          </div>
+          <div class="field">
+            <label class="lbl" for="t-bio">简介（选填）</label>
+            <input id="t-bio" class="input">
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="btn-save-teacher">保存老师</button>
+          <button class="btn" id="btn-reset-teacher">清空表单</button>
+        </div>
+        <p class="hint" style="margin-top:8px">点击下方列表的“编辑”会把资料填回上面的表单，修改后再点保存。</p>
+
+        <h3>老师列表</h3>
+        <table class="data-table">
+          <thead><tr><th>老师</th><th>积分/小时</th><th class="actions">操作</th></tr></thead>
+          <tbody id="teacher-rows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 兑换 -->
+    <section id="tab-redeem" class="tab-panel">
+      <div class="card">
+        <h2>兑换审核</h2>
+        <p class="hint" style="margin-bottom:10px">通过后会写入一条负积分流水（扣分），可在积分登记里查到。</p>
+        <div id="redeem-list" class="entry-list"></div>
+      </div>
+    </section>
+
+    <!-- 数据 -->
+    <section id="tab-data" class="tab-panel">
+      <div class="card">
+        <h2>数据备份</h2>
+        <p class="hint" style="margin-bottom:12px">导出的 JSON 包含成员、赛事、积分流水、老师、兑换记录，换环境时可用来恢复/迁移。</p>
+        <button class="btn btn-primary" id="btn-export">导出全部数据（JSON）</button>
+      </div>
+    </section>
+  </div>
+
+  <footer class="site-footer">斗研电竞俱乐部 · 管理端</footer>
+</div>
+
+<script src="vendor/cloudbase.full.js"></script>
+<script src="js/config.js"></script>
+<script src="js/tcb.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

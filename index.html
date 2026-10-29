@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>斗研电竞俱乐部 · 积分系统</title>
+  <meta name="description" content="斗研电竞俱乐部 积分榜与积分教学">
+  <meta name="theme-color" content="#ff5c35">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="斗研积分">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="site-header">
+    <div class="logo">斗研</div>
+    <div>
+      <h1>斗研电竞俱乐部 · 积分系统</h1>
+      <p class="subtitle">周赛 / 月赛积分榜 · 积分兑换高手教学</p>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="rank">积分榜</button>
+    <button class="tab-btn" data-tab="teach">积分教学</button>
+  </nav>
+
+  <main>
+    <!-- 积分榜 -->
+    <section id="tab-rank" class="tab-panel active">
+      <div class="card">
+        <h2>积分榜</h2>
+        <div class="filter-bar">
+          <button class="chip-tab active" data-period="total">总榜</button>
+          <button class="chip-tab" data-period="month">本月</button>
+          <button class="chip-tab" data-period="week">本周</button>
+          <input id="rank-search" class="input search-input" placeholder="搜索成员昵称">
+        </div>
+        <div id="rank-list" class="rank-list">
+          <p class="empty">加载中…</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 积分教学 -->
+    <section id="tab-teach" class="tab-panel">
+      <div class="card">
+        <h2>积分教学</h2>
+        <p class="hint" style="margin-bottom:12px">用比赛获得的积分，兑换俱乐部高手的一对一教学。点老师卡片查看详情，到店找前台登记兑换。</p>
+        <div id="teacher-grid" class="teacher-grid">
+          <p class="empty">加载中…</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="site-footer">斗研电竞俱乐部 · 重庆</footer>
+</div>
+
+<!-- 老师详情 -->
+<div id="teacher-modal" class="modal-mask" hidden>
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="td-head">
+      <div class="td-avatar" id="td-avatar"></div>
+      <div>
+        <div class="td-name" id="td-name"></div>
+        <div class="td-mode" id="td-mode"></div>
+      </div>
+    </div>
+    <div id="td-pro"></div>
+    <div class="td-label">角色水平</div>
+    <div id="td-levels"></div>
+    <div class="td-label">教学角色</div>
+    <p class="td-names" id="td-chars"></p>
+    <div class="td-label">积分价格</div>
+    <p class="td-names" id="td-price" style="color:var(--accent-2);font-weight:800"></p>
+    <p class="td-names" id="td-bio"></p>
+    <p class="hint">兑换方式：到店找前台登记，确认后扣除相应积分。</p>
+    <button class="btn btn-primary" id="td-close">知道了</button>
+  </div>
+</div>
+
+<script src="vendor/cloudbase.full.js"></script>
+<script src="js/config.js"></script>
+<script src="js/tcb.js"></script>
+<script src="js/public.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js');
+  }
+</script>
+</body>
+</html>
