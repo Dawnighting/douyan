@@ -149,12 +149,10 @@
 
   async function load() {
     try {
-      TCB.init();
-      await TCB.ensureReadable();
-      var res = await Promise.all([TCB.members(), TCB.points(), TCB.teachers()]);
-      state.members = res[0] || [];
-      state.points = res[1] || [];
-      state.teachers = res[2] || [];
+      var data = await Store.loadPublic();
+      state.members = data.members || [];
+      state.points = data.points || [];
+      state.teachers = data.teachers || [];
       renderLeaderboard();
       renderTeachers();
     } catch (e) {

@@ -20,18 +20,19 @@
 
   <!-- 登录 -->
   <div id="login-view" class="card login-wrap">
-    <h2>管理员登录</h2>
+    <h2>管理员登录（GitHub Token）</h2>
     <form id="login-form">
       <div class="field">
-        <label class="lbl" for="login-user">用户名</label>
-        <input id="login-user" class="input" autocomplete="username" required>
+        <label class="lbl" for="login-token">GitHub Token</label>
+        <input id="login-token" class="input" type="password" autocomplete="off"
+               placeholder="github_pat_..." required>
       </div>
-      <div class="field">
-        <label class="lbl" for="login-pass">密码</label>
-        <input id="login-pass" class="input" type="password" autocomplete="current-password" required>
-      </div>
+      <p class="hint" style="margin-bottom:10px">
+        需要一个只对 <b>Dawnighting/douyan</b> 仓库有「Contents 读写」权限的 Fine-grained Token。
+        Token 只保存在本机浏览器里。
+      </p>
       <p id="login-err" class="err" hidden></p>
-      <button class="btn btn-primary" type="submit" style="width:100%">登录</button>
+      <button class="btn btn-primary" type="submit" style="width:100%">进入管理端</button>
     </form>
   </div>
 
@@ -39,7 +40,11 @@
   <div id="main-view" hidden>
     <div class="admin-head">
       <span class="admin-user" id="admin-user"></span>
-      <button class="btn btn-small" id="btn-logout">退出登录</button>
+      <span class="btn-row">
+        <span id="save-state" class="admin-user">已同步</span>
+        <button class="btn btn-small btn-primary" id="btn-save">保存到线上</button>
+        <button class="btn btn-small" id="btn-logout">退出登录</button>
+      </span>
     </div>
 
     <nav class="tabs" id="admin-tabs">
@@ -210,9 +215,8 @@
   <footer class="site-footer">斗研电竞俱乐部 · 管理端</footer>
 </div>
 
-<script src="vendor/cloudbase.full.js"></script>
 <script src="js/config.js"></script>
-<script src="js/tcb.js"></script>
+<script src="js/store.js"></script>
 <script src="js/admin.js"></script>
 </body>
 </html>

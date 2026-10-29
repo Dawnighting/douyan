@@ -5,16 +5,14 @@
 window.APP_CONFIG = {
   clubName: "斗研电竞俱乐部",
   city: "重庆",
-  envId: "douyan-d0gbsrsuw6c3e24f8",
-  adminUid: "2115777526257623042",
+  contact: "到店找前台登记",
 
-  /* 数据库集合名 */
-  collections: {
-    members: "members",
-    events: "events",
-    points: "point_entries",
-    teachers: "teachers",
-    redemptions: "redemptions"
+  /* GitHub 数据仓库（管理端保存时提交到这里，公开端从这里读取） */
+  github: {
+    owner: "Dawnighting",
+    repo: "douyan",
+    branch: "main",
+    dataPath: "data/site.json"
   },
 
   /* 赛事类型 */
