@@ -123,9 +123,29 @@
       "points": 10,
       "reason": "",
       "ts": 1793283276738
+    },
+    {
+      "id": "mvtrkgvrogh2oi",
+      "memberId": "mvtmasgdl6mh4c",
+      "memberName": "怪人王子",
+      "eventId": "mvtrk00jdb0ndu",
+      "eventName": "复建杯",
+      "points": 500000,
+      "reason": "",
+      "ts": 1793291686263
+    },
+    {
+      "id": "mvtrkgvr8f2wa3",
+      "memberId": "mvtmasgdpr8ay2",
+      "memberName": "格小温",
+      "eventId": "mvtrk00jdb0ndu",
+      "eventName": "复建杯",
+      "points": 1,
+      "reason": "",
+      "ts": 1793291686263
     }
   ],
   "teachers": [],
   "redemptions": [],
-  "updatedAt": "2026-10-29T16:34:26.905Z"
+  "updatedAt": "2026-10-29T16:34:48.774Z"
 }
