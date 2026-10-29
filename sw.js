@@ -1,5 +1,5 @@
 /* 斗研积分 · Service Worker（网络优先 + 离线兜底） */
-var CACHE = "douyan-v3";
+var CACHE = "douyan-v4";
 var ASSETS = [
   "./",
   "./index.html",
@@ -7,9 +7,11 @@ var ASSETS = [
   "./css/style.css",
   "./js/config.js",
   "./js/store.js",
+  "./js/hard-refresh.js",
   "./js/public.js",
   "./js/admin.js",
   "./data/site.json",
+  "./images/douyan-logo.jpg",
   "./manifest.webmanifest",
   "./images/icon-192.png",
   "./images/icon-512.png",

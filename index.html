@@ -18,11 +18,13 @@
 <div class="page">
 
   <header class="site-header">
-    <div class="logo">斗研</div>
-    <div>
+    <img class="logo" src="images/douyan-logo.jpg" alt="重庆斗气研究所">
+    <div class="header-copy">
       <h1>斗研电竞俱乐部 · 积分系统</h1>
       <p class="subtitle">周赛 / 月赛积分榜 · 积分兑换高手教学</p>
     </div>
+    <button class="refresh-btn" id="btn-hard-refresh" data-hard-refresh type="button"
+            title="清理旧缓存并强制刷新">刷新</button>
   </header>
 
   <nav class="tabs" id="tabs">
@@ -87,6 +89,7 @@
 
 <script src="js/config.js"></script>
 <script src="js/store.js"></script>
+<script src="js/hard-refresh.js"></script>
 <script src="js/public.js"></script>
 <script>
   if ('serviceWorker' in navigator) {
