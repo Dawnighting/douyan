@@ -64,6 +64,23 @@
   <footer class="site-footer" id="site-footer">斗研电竞俱乐部 · 重庆</footer>
 </div>
 
+<!-- 积分构成 -->
+<div id="score-modal" class="modal-mask" hidden>
+  <div class="modal score-modal" role="dialog" aria-modal="true" aria-labelledby="score-title">
+    <div class="td-head">
+      <div class="td-avatar" id="score-avatar"></div>
+      <div>
+        <div class="td-name" id="score-title"></div>
+        <div class="td-mode" id="score-total"></div>
+      </div>
+    </div>
+    <div class="td-label">积分构成</div>
+    <div id="score-list" class="score-list"></div>
+    <p class="hint">按赛事汇总展示；积分兑换等扣分也会作为负分记录显示。</p>
+    <button class="btn btn-primary" id="score-close">关闭</button>
+  </div>
+</div>
+
 <!-- 老师详情 -->
 <div id="teacher-modal" class="modal-mask" hidden>
   <div class="modal" role="dialog" aria-modal="true">

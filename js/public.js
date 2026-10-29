@@ -9,6 +9,7 @@
 
   var state = {
     members: [],
+    events: [],
     points: [],
     teachers: [],
     period: "total",
@@ -39,6 +40,73 @@
       return new Date(d.getFullYear(), d.getMonth(), 1).getTime();
     }
     return 0;
+  }
+
+  function formatDate(ts) {
+    if (!ts) return "日期未知";
+    var d = new Date(ts);
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" +
+      String(d.getDate()).padStart(2, "0");
+  }
+
+  function eventMap() {
+    var map = {};
+    state.events.forEach(function (event) { map[event.id] = event; });
+    return map;
+  }
+
+  function scoreGroups(memberId) {
+    var events = eventMap();
+    var groups = {};
+    state.points.forEach(function (point) {
+      if (point.memberId !== memberId) return;
+      var key = point.eventId || ("name:" + (point.eventName || "unknown"));
+      var event = events[point.eventId];
+      if (!groups[key]) {
+        groups[key] = {
+          name: event ? event.name : (point.eventName || "未命名赛事"),
+          type: event ? event.type : (point.eventName === "积分兑换" ? "积分扣除" : "其他"),
+          date: event && event.date ? event.date : formatDate(point.ts),
+          points: 0,
+          count: 0,
+          reasons: [],
+          sortTs: 0
+        };
+      }
+      var group = groups[key];
+      group.points += Number(point.points) || 0;
+      group.count++;
+      group.sortTs = Math.max(group.sortTs, Number(point.ts) || 0, Number(event && event.ts) || 0);
+      if (point.reason && group.reasons.indexOf(point.reason) === -1) group.reasons.push(point.reason);
+    });
+    return Object.keys(groups).map(function (key) { return groups[key]; }).sort(function (a, b) {
+      return b.sortTs - a.sortTs;
+    });
+  }
+
+  function openMemberScores(member) {
+    var groups = scoreGroups(member.id);
+    var total = groups.reduce(function (sum, group) { return sum + group.points; }, 0);
+    var avatar = $("score-avatar");
+    avatar.innerHTML = member.avatar
+      ? '<img src="' + escapeHtml(member.avatar) + '" alt="">'
+      : escapeHtml(String(member.name || "?").slice(0, 1));
+    $("score-title").textContent = member.name || "未命名成员";
+    $("score-total").textContent = "总积分 " + total + " · 共 " + groups.length + " 场赛事";
+    $("score-list").innerHTML = groups.map(function (group) {
+      var meta = group.date + " · " + group.type;
+      if (group.count > 1) meta += " · " + group.count + " 笔记录";
+      if (group.reasons.length) meta += " · " + group.reasons.join("、");
+      var pointsClass = group.points < 0 ? "score-event-points negative" : "score-event-points";
+      return '<div class="score-event">' +
+        '<div class="score-event-main">' +
+          '<div class="score-event-name">' + escapeHtml(group.name) + "</div>" +
+          '<div class="score-event-meta">' + escapeHtml(meta) + "</div>" +
+        "</div>" +
+        '<div class="' + pointsClass + '">' + (group.points > 0 ? "+" : "") + group.points + "</div>" +
+      "</div>";
+    }).join("") || '<p class="empty">暂无积分记录</p>';
+    $("score-modal").hidden = false;
   }
 
   function renderLeaderboard() {
@@ -74,7 +142,8 @@
       var rank = i + 1;
       var cls = "rank-row" + (rank === 1 ? " top1" : rank === 2 ? " top2" : rank === 3 ? " top3" : "");
       var sub = r.nickname && r.nickname !== r.name ? escapeHtml(r.nickname) : "";
-      return '<div class="' + cls + '">' +
+      return '<div class="' + cls + '" data-member-id="' + escapeHtml(r.id) +
+        '" role="button" tabindex="0" aria-label="查看' + escapeHtml(r.name) + '的积分构成">' +
         '<div class="rank-no">' + rank + "</div>" +
         avatarHtml(r.avatar, r.name, "rank-avatar") +
         '<div class="rank-main"><div class="rank-name">' + escapeHtml(r.name) + "</div>" +
@@ -82,6 +151,17 @@
         '<div class="rank-points"><div class="p">' + r.period + "</div>" +
         '<div class="t">总积分 ' + r.total + "</div></div></div>";
     }).join("");
+
+    list.querySelectorAll(".rank-row").forEach(function (row) {
+      var member = map[row.getAttribute("data-member-id")];
+      if (!member) return;
+      row.addEventListener("click", function () { openMemberScores(member); });
+      row.addEventListener("keydown", function (event) {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        openMemberScores(member);
+      });
+    });
   }
 
   function groupChars(chars) {
@@ -151,6 +231,7 @@
     try {
       var data = await Store.loadPublic();
       state.members = data.members || [];
+      state.events = data.events || [];
       state.points = data.points || [];
       state.teachers = data.teachers || [];
       renderLeaderboard();
@@ -181,6 +262,17 @@
     $("rank-search").addEventListener("input", function () {
       state.keyword = this.value;
       renderLeaderboard();
+    });
+
+    $("score-close").addEventListener("click", function () { $("score-modal").hidden = true; });
+    $("score-modal").addEventListener("click", function (e) {
+      if (e.target === $("score-modal")) $("score-modal").hidden = true;
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        $("score-modal").hidden = true;
+        $("teacher-modal").hidden = true;
+      }
     });
 
     $("td-close").addEventListener("click", function () { $("teacher-modal").hidden = true; });

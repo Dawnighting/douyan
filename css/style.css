@@ -124,6 +124,12 @@ body {
   display: flex; align-items: center; gap: 12px;
   background: var(--panel-2); border: 1px solid var(--border);
   border-radius: 12px; padding: 10px 14px;
+  cursor: pointer; outline: none;
+  transition: background .15s, border-color .15s, box-shadow .15s, transform .15s;
+}
+.rank-row:hover, .rank-row:focus-visible {
+  background: #1d2538; border-color: rgba(255,92,53,.65);
+  box-shadow: 0 5px 18px rgba(0,0,0,.18); transform: translateY(-1px);
 }
 .rank-no {
   width: 30px; height: 30px; flex: 0 0 auto; border-radius: 9px;
@@ -197,6 +203,18 @@ body {
 .modal h3 { font-size: 17px; margin-bottom: 8px; }
 .modal p { font-size: 14px; margin-bottom: 10px; color: var(--muted); }
 .modal .btn { width: 100%; margin-top: 8px; }
+.score-modal { max-width: 500px; }
+.score-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; }
+.score-event {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px 12px; border-radius: 11px; background: var(--panel);
+  border: 1px solid var(--border);
+}
+.score-event-main { flex: 1; min-width: 0; }
+.score-event-name { font-size: 14px; font-weight: 800; overflow-wrap: anywhere; }
+.score-event-meta { color: var(--muted); font-size: 11px; margin-top: 2px; }
+.score-event-points { flex: 0 0 auto; font-size: 18px; font-weight: 900; color: var(--accent-2); }
+.score-event-points.negative { color: var(--danger); }
 .td-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
 .td-avatar { width: 60px; height: 60px; border-radius: 16px; overflow: hidden; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg,#2c3550,#1c2334); font-weight: 800; font-size: 22px; }
 .td-avatar img { width: 100%; height: 100%; object-fit: cover; }

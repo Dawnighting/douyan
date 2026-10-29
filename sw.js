@@ -1,5 +1,5 @@
 /* 斗研积分 · Service Worker（网络优先 + 离线兜底） */
-var CACHE = "douyan-v4";
+var CACHE = "douyan-v5";
 var ASSETS = [
   "./",
   "./index.html",
