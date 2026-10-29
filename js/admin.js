@@ -225,12 +225,12 @@
     });
   }
 
-  function addEntry(name, points, reason) {
+  function addEntry(name, points, reason, targetEventId) {
     name = String(name || "").trim();
     points = parseInt(points, 10);
     if (!name) throw new Error("请填写成员名字");
     if (!Number.isInteger(points) || points === 0) throw new Error("积分需为非 0 整数");
-    var evId = ensureEventFromInput();
+    var evId = targetEventId || ensureEventFromInput();
     if (!evId) throw new Error("请先选择或新建赛事");
     var ev = state.data.events.find(function (e) { return e.id === evId; });
     var member = findMember(name);
@@ -274,13 +274,27 @@
   $("btn-bulk-import").addEventListener("click", function () {
     var text = $("bulk-text").value.trim();
     if (!text) { alert("请先粘贴要导入的内容"); return; }
+    var targetEventId;
+    try {
+      /* 整批只确定一次赛事，后续每一行都固定写入同一赛事，避免串到旧赛事。 */
+      targetEventId = ensureEventFromInput();
+      if (!targetEventId) throw new Error("请先选择或新建赛事");
+    } catch (ex) {
+      alert(ex.message || ex);
+      return;
+    }
+    var targetEvent = state.data.events.find(function (ev) {
+      return ev.id === targetEventId;
+    });
+    var targetEventName = targetEvent ? targetEvent.name : "未知赛事";
+    $("bulk-event-label").textContent = "本次导入归属：" + targetEventName;
     var lines = text.split(/\r?\n/).map(function (l) { return l.trim(); }).filter(Boolean);
     var ok = 0, fail = [];
     lines.forEach(function (line) {
       var parts = line.split(/[\s,，、\t]+/).filter(Boolean);
       if (parts.length < 2) { fail.push(line); return; }
       try {
-        addEntry(parts[0], parts[1], parts.slice(2).join(" "));
+        addEntry(parts[0], parts[1], parts.slice(2).join(" "), targetEventId);
         ok++;
       } catch (ex) {
         fail.push(line + "（" + (ex.message || ex) + "）");
@@ -290,7 +304,8 @@
     renderEntryList();
     renderMemberRows();
     if (ok) setDirty(true);
-    alert("导入完成：成功 " + ok + " 条" + (fail.length ? "，失败 " + fail.length + " 条（已留在输入框）" : ""));
+    alert("导入完成：成功 " + ok + " 条，已登记到「" + targetEventName + "」" +
+      (fail.length ? "；失败 " + fail.length + " 条（已留在输入框）" : ""));
   });
 
   function renderEntryList() {
