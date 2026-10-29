@@ -36,7 +36,8 @@ self.addEventListener("fetch", function (e) {
   var url = new URL(e.request.url);
   if (e.request.method !== "GET" || url.origin !== location.origin) return;
   e.respondWith(
-    fetch(e.request).then(function (res) {
+    /* 联网时绕过浏览器 HTTP 缓存，避免 GitHub Pages 的 max-age 导致旧页面。 */
+    fetch(e.request, { cache: "no-store" }).then(function (res) {
       var copy = res.clone();
       caches.open(CACHE).then(function (c) { c.put(e.request, copy); });
       return res;
