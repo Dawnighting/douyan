@@ -102,9 +102,19 @@
       "points": 10,
       "reason": "",
       "ts": 1793283276738
+    },
+    {
+      "id": "mvtmrvvc0qv85y",
+      "memberId": "mvtmasgdl6mh4c",
+      "memberName": "怪人王子",
+      "eventId": "mvtma88qohyb1p",
+      "eventName": "格小温杯",
+      "points": 500000,
+      "reason": "",
+      "ts": 1793283634200
     }
   ],
   "teachers": [],
   "redemptions": [],
-  "updatedAt": "2026-10-29T14:14:41.176Z"
+  "updatedAt": "2026-10-29T14:26:54.746Z"
 }
