@@ -79,7 +79,10 @@
         </div>
 
         <h3>快速录入</h3>
-        <p class="hint" id="current-event-label" style="margin-bottom:6px">当前登记赛事：—</p>
+        <div class="event-current-row">
+          <p class="hint" id="current-event-label">当前登记赛事：—</p>
+          <button class="btn btn-small" id="btn-manage-events" type="button">管理赛事</button>
+        </div>
         <div class="entry-row">
           <div class="field">
             <label class="lbl" for="entry-name">成员</label>
@@ -212,6 +215,18 @@
         <button class="btn btn-primary" id="btn-export">导出全部数据（JSON）</button>
       </div>
     </section>
+  </div>
+
+  <!-- 赛事管理 -->
+  <div id="event-admin-modal" class="modal-mask" hidden>
+    <div class="modal event-admin-modal" role="dialog" aria-modal="true" aria-labelledby="event-admin-title">
+      <div class="event-admin-head">
+        <h3 id="event-admin-title">赛事管理</h3>
+        <button class="btn btn-small" id="event-admin-close" type="button">关闭</button>
+      </div>
+      <p class="hint">删除赛事会同时删除该赛事下的全部积分记录；成员本人及其他赛事的数据不受影响。</p>
+      <div id="event-admin-list" class="event-admin-list"></div>
+    </div>
   </div>
 
   <footer class="site-footer">斗研电竞俱乐部 · 管理端</footer>

@@ -197,6 +197,8 @@ body {
 .admin-user { color: var(--muted); font-size: 12px; }
 .entry-row { display: grid; grid-template-columns: 1.4fr .7fr 1.2fr auto; gap: 8px; align-items: end; margin-bottom: 10px; }
 .entry-row .field { margin-bottom: 0; }
+.event-current-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.event-current-row .hint { margin: 0; }
 .entry-list { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
 .entry-item {
   display: flex; align-items: center; gap: 10px; font-size: 13px;
@@ -211,6 +213,21 @@ body {
 .data-table th, .data-table td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border); }
 .data-table th { color: var(--muted); font-weight: 600; font-size: 12px; }
 .data-table .actions { text-align: right; white-space: nowrap; }
+.event-admin-modal { max-width: 520px; }
+.event-admin-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.event-admin-head h3 { margin: 0; }
+.event-admin-head .btn { width: auto; margin: 0; }
+.event-admin-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.event-admin-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px; border-radius: 12px; background: var(--panel);
+  border: 1px solid var(--border);
+}
+.event-admin-main { flex: 1; min-width: 0; }
+.event-admin-name { font-size: 14px; font-weight: 800; overflow-wrap: anywhere; }
+.event-admin-meta { color: var(--muted); font-size: 11px; margin-top: 2px; }
+.event-admin-total { color: var(--accent-2); font-size: 13px; font-weight: 800; white-space: nowrap; }
+.event-admin-item .btn { flex: 0 0 auto; width: auto; margin: 0; }
 
 /* 页脚 */
 .site-footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 10px; }
@@ -218,6 +235,13 @@ body {
 @media (max-width: 620px) {
   .grid-2 { grid-template-columns: 1fr; }
   .entry-row { grid-template-columns: 1fr 1fr; }
+  .event-admin-item {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center; justify-content: initial;
+  }
+  .event-admin-main { grid-column: 1 / -1; }
+  .event-admin-total { grid-column: 1; grid-row: 2; }
+  .event-admin-item .btn { grid-column: 2; grid-row: 2; }
   .logo { width: 46px; height: 46px; font-size: 16px; }
   .rank-points .p { font-size: 18px; }
 }

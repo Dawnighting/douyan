@@ -146,6 +146,7 @@
 
   function renderAll() {
     renderEventSelect();
+    renderEventAdmin();
     renderMemberDatalist();
     renderEntryList();
     renderMemberRows();
@@ -209,6 +210,72 @@
   });
 
   $("event-select").addEventListener("change", updateCurrentEventLabel);
+
+  function eventPoints(eventId) {
+    return state.data.points.filter(function (p) { return p.eventId === eventId; });
+  }
+
+  function renderEventAdmin() {
+    var list = $("event-admin-list");
+    var events = state.data.events.slice().sort(function (a, b) {
+      return (b.ts || 0) - (a.ts || 0);
+    });
+    if (events.length === 0) {
+      list.innerHTML = '<p class="empty">暂无赛事</p>';
+      return;
+    }
+    list.innerHTML = events.map(function (ev) {
+      var points = eventPoints(ev.id);
+      var total = points.reduce(function (sum, p) { return sum + (Number(p.points) || 0); }, 0);
+      return '<div class="event-admin-item">' +
+        '<div class="event-admin-main">' +
+          '<div class="event-admin-name">' + escapeHtml(ev.name || "未命名赛事") + "</div>" +
+          '<div class="event-admin-meta">' + escapeHtml(ev.type || "其他") + " · " +
+            escapeHtml(ev.date || "未填写日期") + " · " + points.length + " 条积分记录</div>" +
+        "</div>" +
+        '<span class="event-admin-total">' + total + " 分</span>" +
+        '<button class="btn btn-small btn-danger" type="button" data-del-event="' + ev.id + '">删除赛事</button>' +
+      "</div>";
+    }).join("");
+
+    list.querySelectorAll("[data-del-event]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var id = btn.getAttribute("data-del-event");
+        var ev = state.data.events.find(function (x) { return x.id === id; });
+        if (!ev) return;
+        var points = eventPoints(id);
+        var total = points.reduce(function (sum, p) { return sum + (Number(p.points) || 0); }, 0);
+        var message = "确定删除赛事「" + ev.name + "」？\n\n" +
+          "将永久删除该赛事下 " + points.length + " 条积分记录，共 " + total + " 分。\n" +
+          "成员资料不会被删除，其他赛事不受影响。";
+        if (!confirm(message)) return;
+
+        state.data.events = state.data.events.filter(function (x) { return x.id !== id; });
+        state.data.points = state.data.points.filter(function (p) { return p.eventId !== id; });
+        renderEventSelect();
+        renderEventAdmin();
+        renderEntryList();
+        renderMemberRows();
+        setDirty(true);
+      });
+    });
+  }
+
+  function openEventAdmin() {
+    renderEventAdmin();
+    $("event-admin-modal").hidden = false;
+  }
+
+  $("btn-manage-events").addEventListener("click", openEventAdmin);
+  $("event-admin-close").addEventListener("click", function () {
+    $("event-admin-modal").hidden = true;
+  });
+  $("event-admin-modal").addEventListener("click", function (e) {
+    if (e.target === $("event-admin-modal")) $("event-admin-modal").hidden = true;
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") $("event-admin-modal").hidden = true;
+  });
 
   /* 如果"新建赛事"输入框里有名字，记分前自动创建并选中它 */
   function ensureEventFromInput() {
