@@ -49,18 +49,18 @@
       "ts": 1793284980510
     },
     {
-      "id": "mvtoefpg4fwq52",
-      "name": "丁丁杯",
-      "type": "周赛",
-      "date": "2026-10-29",
-      "ts": 1793286365956
-    },
-    {
       "id": "mvtpwi3kplq57z",
       "name": "怪人王子杯",
       "type": "周赛",
       "date": "2026-10-29",
       "ts": 1793288888480
+    },
+    {
+      "id": "mvtrk00jdb0ndu",
+      "name": "复建杯",
+      "type": "周赛",
+      "date": "2026-10-29",
+      "ts": 1793291664403
     }
   ],
   "points": [
@@ -125,17 +125,27 @@
       "ts": 1793283276738
     },
     {
-      "id": "mvtpx9zctk90am",
-      "memberId": "mvtmk81u4wwb7p",
-      "memberName": "大吉",
-      "eventId": "mvtoefpg4fwq52",
-      "eventName": "丁丁杯",
+      "id": "mvtrkgvrogh2oi",
+      "memberId": "mvtmasgdl6mh4c",
+      "memberName": "怪人王子",
+      "eventId": "mvtrk00jdb0ndu",
+      "eventName": "复建杯",
       "points": 500000,
       "reason": "",
-      "ts": 1793288924616
+      "ts": 1793291686263
+    },
+    {
+      "id": "mvtrkgvr8f2wa3",
+      "memberId": "mvtmasgdpr8ay2",
+      "memberName": "格小温",
+      "eventId": "mvtrk00jdb0ndu",
+      "eventName": "复建杯",
+      "points": 1,
+      "reason": "",
+      "ts": 1793291686263
     }
   ],
   "teachers": [],
   "redemptions": [],
-  "updatedAt": "2026-10-29T15:48:47.130Z"
+  "updatedAt": "2026-10-29T16:34:48.774Z"
 }
