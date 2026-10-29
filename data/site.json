@@ -1,8 +1,72 @@
 {
-  "members": [],
-  "events": [],
-  "points": [],
+  "members": [
+    {
+      "id": "mvtmasgdpr8ay2",
+      "name": "格小温",
+      "nickname": "",
+      "avatar": "",
+      "active": true,
+      "ts": 1793282836621
+    },
+    {
+      "id": "mvtmasgdl6mh4c",
+      "name": "怪人王子",
+      "nickname": "",
+      "avatar": "",
+      "active": true,
+      "ts": 1793282836621
+    },
+    {
+      "id": "mvtmasge5di4ru",
+      "name": "zun",
+      "nickname": "",
+      "avatar": "",
+      "active": true,
+      "ts": 1793282836622
+    }
+  ],
+  "events": [
+    {
+      "id": "mvtma88qohyb1p",
+      "name": "格小温杯",
+      "type": "周赛",
+      "date": "2026-10-01",
+      "ts": 1793282810426
+    }
+  ],
+  "points": [
+    {
+      "id": "mvtmasgd8mdjmg",
+      "memberId": "mvtmasgdpr8ay2",
+      "memberName": "格小温",
+      "eventId": "mvtma88qohyb1p",
+      "eventName": "格小温杯",
+      "points": 50,
+      "reason": "冠军",
+      "ts": 1793282836621
+    },
+    {
+      "id": "mvtmasgej4tadd",
+      "memberId": "mvtmasgdl6mh4c",
+      "memberName": "怪人王子",
+      "eventId": "mvtma88qohyb1p",
+      "eventName": "格小温杯",
+      "points": 30,
+      "reason": "",
+      "ts": 1793282836622
+    },
+    {
+      "id": "mvtmasgebamxtm",
+      "memberId": "mvtmasge5di4ru",
+      "memberName": "zun",
+      "eventId": "mvtma88qohyb1p",
+      "eventName": "格小温杯",
+      "points": 10,
+      "reason": "",
+      "ts": 1793282836622
+    }
+  ],
   "teachers": [],
   "redemptions": [],
-  "updatedAt": null
+  "updatedAt": "2026-10-29T14:07:24.172Z"
 }
