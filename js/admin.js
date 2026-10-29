@@ -36,7 +36,42 @@
     var el = $("save-state");
     el.textContent = v ? "● 有未保存修改" : "已同步";
     el.style.color = v ? "var(--accent-2)" : "var(--muted)";
+    if (v) scheduleAutoSave();
   }
+
+  var autoSaveTimer = null;
+  var saving = false;
+
+  function scheduleAutoSave() {
+    if (autoSaveTimer) clearTimeout(autoSaveTimer);
+    autoSaveTimer = setTimeout(function () { saveNow(false); }, 2500);
+  }
+
+  async function saveNow(showAlert) {
+    if (!state.dirty || saving) return;
+    saving = true;
+    try {
+      $("btn-save").disabled = true;
+      $("save-state").textContent = "保存中…";
+      await Store.saveRemote(state.token, state.data);
+      state.dirty = false;
+      $("save-state").textContent = "已自动保存";
+      $("save-state").style.color = "var(--muted)";
+      if (showAlert) alert("已提交到 GitHub，约 1 分钟后线上生效。");
+    } catch (ex) {
+      $("save-state").textContent = "● 保存失败，请重试";
+      $("save-state").style.color = "var(--danger)";
+      if (showAlert) alert(ex.message || ex);
+    } finally {
+      saving = false;
+      $("btn-save").disabled = false;
+      if (state.dirty && !autoSaveTimer) scheduleAutoSave();
+    }
+  }
+
+  window.addEventListener("beforeunload", function (e) {
+    if (state.dirty) { e.preventDefault(); e.returnValue = ""; }
+  });
 
   function showLogin() {
     $("login-view").hidden = false;
@@ -90,18 +125,9 @@
   });
 
   $("btn-save").addEventListener("click", async function () {
-    try {
-      $("btn-save").disabled = true;
-      $("save-state").textContent = "保存中…";
-      await Store.saveRemote(state.token, state.data);
-      setDirty(false);
-      alert("已提交到 GitHub，约 1 分钟后线上生效。");
-    } catch (ex) {
-      alert(ex.message || ex);
-      setDirty(true);
-    } finally {
-      $("btn-save").disabled = false;
-    }
+    if (autoSaveTimer) { clearTimeout(autoSaveTimer); autoSaveTimer = null; }
+    if (!state.dirty) { alert("没有需要保存的修改。"); return; }
+    await saveNow(true);
   });
 
   function renderAll() {
@@ -130,6 +156,13 @@
       sel.appendChild(opt);
     });
     if (prev && events.some(function (ev) { return ev.id === prev; })) sel.value = prev;
+    updateCurrentEventLabel();
+  }
+
+  function updateCurrentEventLabel() {
+    var sel = $("event-select");
+    var ev = state.data.events.find(function (e) { return e.id === sel.value; });
+    $("current-event-label").textContent = "当前登记赛事：" + (ev ? ev.name : "（未选择）");
   }
 
   $("btn-create-event").addEventListener("click", function () {
@@ -146,8 +179,11 @@
     $("event-name").value = "";
     renderEventSelect();
     $("event-select").value = ev.id;
+    updateCurrentEventLabel();
     setDirty(true);
   });
+
+  $("event-select").addEventListener("change", updateCurrentEventLabel);
 
   /* ---------- 积分登记 ---------- */
   function findMember(name) {
