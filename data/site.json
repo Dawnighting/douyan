@@ -47,6 +47,20 @@
       "type": "周赛",
       "date": "2026-10-29",
       "ts": 1793284980510
+    },
+    {
+      "id": "mvtoefpg4fwq52",
+      "name": "丁丁杯",
+      "type": "周赛",
+      "date": "2026-10-29",
+      "ts": 1793286365956
+    },
+    {
+      "id": "mvtpwi3kplq57z",
+      "name": "怪人王子杯",
+      "type": "周赛",
+      "date": "2026-10-29",
+      "ts": 1793288888480
     }
   ],
   "points": [
@@ -111,17 +125,17 @@
       "ts": 1793283276738
     },
     {
-      "id": "mvtn6j3ukp6exa",
-      "memberId": "mvtmasgdl6mh4c",
-      "memberName": "怪人王子",
-      "eventId": "evding272823",
-      "eventName": "丁杯",
+      "id": "mvtpx9zctk90am",
+      "memberId": "mvtmk81u4wwb7p",
+      "memberName": "大吉",
+      "eventId": "mvtoefpg4fwq52",
+      "eventName": "丁丁杯",
       "points": 500000,
       "reason": "",
-      "ts": 1793284317498
+      "ts": 1793288924616
     }
   ],
   "teachers": [],
   "redemptions": [],
-  "updatedAt": "2026-10-29T14:43:00.5214819Z"
+  "updatedAt": "2026-10-29T15:48:47.130Z"
 }
