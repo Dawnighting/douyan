@@ -61,19 +61,19 @@
       <div class="card">
         <h2>积分登记</h2>
 
-        <div class="grid-2">
+        <div class="grid-2 event-setup-grid">
           <div class="field">
             <label class="lbl" for="event-select">赛事</label>
             <select id="event-select" class="select"></select>
           </div>
           <div class="field">
             <label class="lbl">新建赛事</label>
-            <div class="btn-row">
-              <input id="event-name" class="input" placeholder="如 10月第4周周赛" style="flex:1">
-              <select id="event-type" class="select" style="width:88px">
+            <div class="btn-row event-create-row">
+              <input id="event-name" class="input" placeholder="如 10月第4周周赛">
+              <select id="event-type" class="select">
                 <option>周赛</option><option>月赛</option><option>其他</option>
               </select>
-              <input id="event-date" class="input" type="date" style="width:140px">
+              <input id="event-date" class="input" type="date">
               <button class="btn btn-small" id="btn-create-event">新建</button>
             </div>
           </div>
@@ -212,8 +212,8 @@
     <section id="tab-data" class="tab-panel">
       <div class="card">
         <h2>数据备份</h2>
-        <p class="hint" style="margin-bottom:12px">导出的 JSON 包含成员、赛事、积分流水、老师、兑换记录，换环境时可用来恢复/迁移。</p>
-        <button class="btn btn-primary" id="btn-export">导出全部数据（JSON）</button>
+        <p class="hint" style="margin-bottom:12px">下载的 JSON 包含成员、赛事、积分流水、老师和兑换记录。Token 过期不会删除线上数据，重新配置 Token 后即可继续管理。</p>
+        <button class="btn btn-primary" id="btn-export">下载完整本地备份（JSON）</button>
       </div>
     </section>
   </div>

@@ -1,0 +1,141 @@
+{
+  "members": [
+    {
+      "id": "mvtmasgdpr8ay2",
+      "name": "格小温",
+      "nickname": "",
+      "avatar": "",
+      "active": true,
+      "ts": 1793282836621
+    },
+    {
+      "id": "mvtmasgdl6mh4c",
+      "name": "怪人王子",
+      "nickname": "",
+      "avatar": "",
+      "active": true,
+      "ts": 1793282836621
+    },
+    {
+      "id": "mvtmasge5di4ru",
+      "name": "zun",
+      "nickname": "",
+      "avatar": "",
+      "active": true,
+      "ts": 1793282836622
+    },
+    {
+      "id": "mvtmk81u4wwb7p",
+      "name": "大吉",
+      "nickname": "",
+      "avatar": "",
+      "active": true,
+      "ts": 1793283276738
+    }
+  ],
+  "events": [
+    {
+      "id": "mvtma88qohyb1p",
+      "name": "格小温杯",
+      "type": "周赛",
+      "date": "2026-10-01",
+      "ts": 1793282810426
+    },
+    {
+      "id": "evding272823",
+      "name": "丁杯",
+      "type": "周赛",
+      "date": "2026-10-29",
+      "ts": 1793284980510
+    },
+    {
+      "id": "mvtoefpg4fwq52",
+      "name": "丁丁杯",
+      "type": "周赛",
+      "date": "2026-10-29",
+      "ts": 1793286365956
+    },
+    {
+      "id": "mvtpwi3kplq57z",
+      "name": "怪人王子杯",
+      "type": "周赛",
+      "date": "2026-10-29",
+      "ts": 1793288888480
+    }
+  ],
+  "points": [
+    {
+      "id": "mvtmasgd8mdjmg",
+      "memberId": "mvtmasgdpr8ay2",
+      "memberName": "格小温",
+      "eventId": "mvtma88qohyb1p",
+      "eventName": "格小温杯",
+      "points": 50,
+      "reason": "冠军",
+      "ts": 1793282836621
+    },
+    {
+      "id": "mvtmasgej4tadd",
+      "memberId": "mvtmasgdl6mh4c",
+      "memberName": "怪人王子",
+      "eventId": "mvtma88qohyb1p",
+      "eventName": "格小温杯",
+      "points": 30,
+      "reason": "",
+      "ts": 1793282836622
+    },
+    {
+      "id": "mvtmasgebamxtm",
+      "memberId": "mvtmasge5di4ru",
+      "memberName": "zun",
+      "eventId": "mvtma88qohyb1p",
+      "eventName": "格小温杯",
+      "points": 10,
+      "reason": "",
+      "ts": 1793282836622
+    },
+    {
+      "id": "mvtmk81u4wrfqy",
+      "memberId": "mvtmasgdl6mh4c",
+      "memberName": "怪人王子",
+      "eventId": "mvtma88qohyb1p",
+      "eventName": "格小温杯",
+      "points": 50,
+      "reason": "",
+      "ts": 1793283276738
+    },
+    {
+      "id": "mvtmk81udgxbrv",
+      "memberId": "mvtmasgdpr8ay2",
+      "memberName": "格小温",
+      "eventId": "mvtma88qohyb1p",
+      "eventName": "格小温杯",
+      "points": 20,
+      "reason": "",
+      "ts": 1793283276738
+    },
+    {
+      "id": "mvtmk81uzfuimf",
+      "memberId": "mvtmk81u4wwb7p",
+      "memberName": "大吉",
+      "eventId": "mvtma88qohyb1p",
+      "eventName": "格小温杯",
+      "points": 10,
+      "reason": "",
+      "ts": 1793283276738
+    },
+    {
+      "id": "mvtpx9zctk90am",
+      "memberId": "mvtmk81u4wwb7p",
+      "memberName": "大吉",
+      "eventId": "mvtoefpg4fwq52",
+      "eventName": "丁丁杯",
+      "points": 500000,
+      "reason": "",
+      "ts": 1793288924616
+    }
+  ],
+  "teachers": [],
+  "redemptions": [],
+  "updatedAt": "2026-10-29T15:48:47.130Z"
+}

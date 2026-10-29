@@ -73,6 +73,14 @@ body {
 
 /* 表单 */
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.event-setup-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+.btn-row.event-create-row {
+  display: grid; grid-template-columns: 100px minmax(150px, 1fr) auto;
+  align-items: center;
+}
+.event-create-row #event-name { grid-column: 1 / -1; min-width: 0; }
+.event-create-row #event-type { width: 100px; }
+.event-create-row #event-date { width: 100%; min-width: 150px; }
 .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
 .lbl { color: var(--muted); font-size: 13px; }
 .input, .select, .textarea {
@@ -242,6 +250,8 @@ body {
 
 @media (max-width: 620px) {
   .grid-2 { grid-template-columns: 1fr; }
+  .btn-row.event-create-row { grid-template-columns: 90px minmax(0, 1fr) auto; }
+  .event-create-row #event-type { width: 90px; }
   .entry-row { grid-template-columns: 1fr 1fr; }
   .event-admin-item {
     display: grid; grid-template-columns: minmax(0, 1fr) auto;
