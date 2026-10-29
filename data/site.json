@@ -49,13 +49,6 @@
       "ts": 1793284980510
     },
     {
-      "id": "mvtoefpg4fwq52",
-      "name": "丁丁杯",
-      "type": "周赛",
-      "date": "2026-10-29",
-      "ts": 1793286365956
-    },
-    {
       "id": "mvtpwi3kplq57z",
       "name": "怪人王子杯",
       "type": "周赛",
@@ -123,19 +116,9 @@
       "points": 10,
       "reason": "",
       "ts": 1793283276738
-    },
-    {
-      "id": "mvtpx9zctk90am",
-      "memberId": "mvtmk81u4wwb7p",
-      "memberName": "大吉",
-      "eventId": "mvtoefpg4fwq52",
-      "eventName": "丁丁杯",
-      "points": 500000,
-      "reason": "",
-      "ts": 1793288924616
     }
   ],
   "teachers": [],
   "redemptions": [],
-  "updatedAt": "2026-10-29T15:48:47.130Z"
+  "updatedAt": "2026-10-29T16:33:56.195Z"
 }
