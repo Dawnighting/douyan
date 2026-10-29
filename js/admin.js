@@ -13,6 +13,7 @@
     editingTeacherId: null,
     token: ""
   };
+  var editRevision = 0;
 
   function uid() {
     return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
@@ -33,6 +34,7 @@
 
   function setDirty(v) {
     state.dirty = v;
+    if (v) editRevision++;
     var el = $("save-state");
     el.textContent = v ? "● 有未保存修改" : "已同步";
     el.style.color = v ? "var(--accent-2)" : "var(--muted)";
@@ -44,20 +46,33 @@
 
   function scheduleAutoSave() {
     if (autoSaveTimer) clearTimeout(autoSaveTimer);
-    autoSaveTimer = setTimeout(function () { saveNow(false); }, 2500);
+    autoSaveTimer = setTimeout(function () {
+      autoSaveTimer = null;
+      saveNow(false);
+    }, 2500);
   }
 
   async function saveNow(showAlert) {
     if (!state.dirty || saving) return;
+    var revisionAtSave = editRevision;
     saving = true;
     try {
       $("btn-save").disabled = true;
       $("save-state").textContent = "保存中…";
       await Store.saveRemote(state.token, state.data);
-      state.dirty = false;
-      $("save-state").textContent = "已自动保存";
-      $("save-state").style.color = "var(--muted)";
-      if (showAlert) alert("已提交到 GitHub，约 1 分钟后线上生效。");
+      if (editRevision === revisionAtSave) {
+        state.dirty = false;
+        $("save-state").textContent = "已自动保存";
+        $("save-state").style.color = "var(--muted)";
+        if (showAlert) alert("已提交到 GitHub，约 1 分钟后线上生效。");
+      } else {
+        /* 保存请求期间又改了数据，保留未保存状态并继续保存最新版本。 */
+        state.dirty = true;
+        $("save-state").textContent = "● 保存期间有新修改，正在继续保存";
+        $("save-state").style.color = "var(--accent-2)";
+        scheduleAutoSave();
+        if (showAlert) alert("上一批修改已提交；保存期间产生的新修改仍在等待保存。");
+      }
     } catch (ex) {
       $("save-state").textContent = "● 保存失败，请重试";
       $("save-state").style.color = "var(--danger)";
@@ -65,7 +80,6 @@
     } finally {
       saving = false;
       $("btn-save").disabled = false;
-      if (state.dirty && !autoSaveTimer) scheduleAutoSave();
     }
   }
 
@@ -168,6 +182,17 @@
   $("btn-create-event").addEventListener("click", function () {
     var name = $("event-name").value.trim();
     if (!name) { alert("请填写赛事名称"); return; }
+    var existing = state.data.events.find(function (ev) {
+      return String(ev.name || "").trim().toLowerCase() === name.toLowerCase();
+    });
+    if (existing) {
+      $("event-name").value = "";
+      renderEventSelect();
+      $("event-select").value = existing.id;
+      updateCurrentEventLabel();
+      alert("赛事「" + existing.name + "」已存在，已为你切换。");
+      return;
+    }
     var ev = {
       id: uid(),
       name: name,
@@ -189,7 +214,9 @@
   function ensureEventFromInput() {
     var name = $("event-name").value.trim();
     if (!name) return $("event-select").value;
-    var ev = state.data.events.find(function (e) { return e.name === name; });
+    var ev = state.data.events.find(function (e) {
+      return String(e.name || "").trim().toLowerCase() === name.toLowerCase();
+    });
     if (!ev) {
       ev = {
         id: uid(),
@@ -366,7 +393,22 @@
         if (nick === null) return;
         var av = prompt("头像图片链接（可空）", m.avatar || "");
         if (av === null) return;
-        m.name = name.trim();
+        var nextName = name.trim();
+        if (!nextName) {
+          alert("成员名字不能为空");
+          return;
+        }
+        var duplicate = state.data.members.find(function (x) {
+          if (x.id === m.id) return false;
+          return [x.name, x.nickname].some(function (value) {
+            return String(value || "").trim().toLowerCase() === nextName.toLowerCase();
+          });
+        });
+        if (duplicate) {
+          alert("已存在同名成员「" + duplicate.name + "」");
+          return;
+        }
+        m.name = nextName;
         m.nickname = nick.trim();
         m.avatar = av.trim();
         renderMemberRows();
@@ -484,6 +526,7 @@
         if (!confirm("确定删除这位老师？")) return;
         var id = btn.getAttribute("data-del");
         state.data.teachers = state.data.teachers.filter(function (t) { return t.id !== id; });
+        if (state.editingTeacherId === id) resetTeacherForm();
         renderTeacherRows();
         setDirty(true);
       });
