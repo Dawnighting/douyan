@@ -48,7 +48,7 @@
 
     var map = {};
     state.members.forEach(function (m) {
-      map[m._id] = { id: m._id, name: m.name || m.nickname || "未命名", nickname: m.nickname || "", avatar: m.avatar || "", total: 0, period: 0 };
+      map[m.id] = { id: m.id, name: m.name || m.nickname || "未命名", nickname: m.nickname || "", avatar: m.avatar || "", total: 0, period: 0 };
     });
 
     state.points.forEach(function (p) {
