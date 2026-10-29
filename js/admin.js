@@ -185,6 +185,36 @@
 
   $("event-select").addEventListener("change", updateCurrentEventLabel);
 
+  /* 如果"新建赛事"输入框里有名字，记分前自动创建并选中它 */
+  function ensureEventFromInput() {
+    var name = $("event-name").value.trim();
+    if (!name) return $("event-select").value;
+    var ev = state.data.events.find(function (e) { return e.name === name; });
+    if (!ev) {
+      ev = {
+        id: uid(),
+        name: name,
+        type: $("event-type").value,
+        date: $("event-date").value || new Date().toISOString().slice(0, 10),
+        ts: Date.now()
+      };
+      state.data.events.push(ev);
+    }
+    $("event-name").value = "";
+    renderEventSelect();
+    $("event-select").value = ev.id;
+    updateCurrentEventLabel();
+    return ev.id;
+  }
+
+  $("event-name").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      $("btn-create-event").click();
+      $("entry-name").focus();
+    }
+  });
+
   /* ---------- 积分登记 ---------- */
   function findMember(name) {
     var key = String(name || "").trim().toLowerCase();
@@ -200,7 +230,7 @@
     points = parseInt(points, 10);
     if (!name) throw new Error("请填写成员名字");
     if (!Number.isInteger(points) || points === 0) throw new Error("积分需为非 0 整数");
-    var evId = $("event-select").value;
+    var evId = ensureEventFromInput();
     if (!evId) throw new Error("请先选择或新建赛事");
     var ev = state.data.events.find(function (e) { return e.id === evId; });
     var member = findMember(name);
